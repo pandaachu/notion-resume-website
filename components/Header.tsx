@@ -12,7 +12,6 @@ interface HeaderProps {
 }
 
 export default function Header({ personalInfo }: HeaderProps) {
-  console.log("🚀 ~ Header ~ personalInfo:", personalInfo)
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -7,35 +7,24 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
-    <section className="mb-12">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">專案作品</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section className="mb-12" data-aos="fade-left">
+      <h3 className="mb-6 text-2xl font-bold text-gray-900">專案作品</h3>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {projects.map((project) => (
-          <div key={project.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            {project.image && (
-              <img
-                className="w-full h-48 object-cover"
-                src={project.image}
-                alt={project.name}
-              />
-            )}
+          <div key={project.id} className="overflow-hidden rounded-lg bg-white shadow-md">
+            {project.image && <img className="h-48 w-full object-cover" src={project.image} alt={project.name} />}
             <div className="p-6">
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                {project.name}
-              </h4>
-              <p className="text-gray-700 mb-4">{project.description}</p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
+              <h4 className="mb-2 text-xl font-semibold text-gray-900">{project.name}</h4>
+              <p className="mb-4 text-gray-700">{project.description}</p>
+
+              <div className="mb-4 flex flex-wrap gap-2">
                 {project.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-                  >
+                  <span key={index} className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">
                     {tech}
                   </span>
                 ))}
               </div>
-              
+
               <div className="flex space-x-4">
                 {project.githubUrl && (
                   <a
@@ -44,7 +33,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     rel="noopener noreferrer"
                     className="flex items-center text-gray-600 hover:text-gray-900"
                   >
-                    <CodeBracketIcon className="w-4 h-4 mr-1" />
+                    <CodeBracketIcon className="mr-1 h-4 w-4" />
                     程式碼
                   </a>
                 )}
@@ -55,7 +44,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     rel="noopener noreferrer"
                     className="flex items-center text-blue-600 hover:text-blue-800"
                   >
-                    <ArrowTopRightOnSquareIcon className="w-4 h-4 mr-1" />
+                    <ArrowTopRightOnSquareIcon className="mr-1 h-4 w-4" />
                     即時預覽
                   </a>
                 )}

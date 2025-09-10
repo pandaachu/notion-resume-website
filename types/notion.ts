@@ -21,10 +21,10 @@ export interface Experience {
   current: boolean;
   description: string;
   technologies: string[];
-  hasDetailPage?: boolean;        // 是否有詳細頁面
-  detailPageId?: string;          // 詳細頁面的 ID
+  hasDetailPage?: boolean; // 是否有詳細頁面
+  detailPageId?: string; // 詳細頁面的 ID
   detailPageContent?: NotionBlock[]; // 詳細頁面的內容
-  detailPageTitle?: string;       // 詳細頁面的標題
+  detailPageTitle?: string; // 詳細頁面的標題
 }
 
 export interface Education {
@@ -113,4 +113,14 @@ export interface ResumeData {
   projects: Project[];
   skills: Skill[];
   pageContent?: PageContent;
+}
+
+export interface Heading1Block {
+  id: string;
+  type: 'heading_1';
+  content: string;
+  heading: {
+    level: 1;
+    content: string;
+  };
 }

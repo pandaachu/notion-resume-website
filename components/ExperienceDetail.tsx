@@ -8,7 +8,7 @@ interface ProjectsSectionProps {
 export default function ProjectsDetail({ projects }: ProjectsSectionProps) {
   return (
     <section className="mb-12">
-      <h3 className="mb-6 text-2xl font-bold text-gray-900">專案</h3>
+      <h3 className="mb-6 text-2xl font-bold">專案</h3>
     </section>
   );
 }

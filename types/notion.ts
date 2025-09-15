@@ -45,6 +45,10 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   image?: string;
+  hasDetailPage?: boolean; // 是否有詳細頁面
+  detailPageId?: string; // 詳細頁面的 ID
+  detailPageContent?: NotionBlock[]; // 詳細頁面的內容
+  detailPageTitle?: string; // 詳細頁面的標題
 }
 
 export interface Skill {
@@ -113,6 +117,7 @@ export interface ResumeData {
   projects: Project[];
   skills: Skill[];
   pageContent?: PageContent;
+  specialSections?: any;
 }
 
 export interface Heading1Block {

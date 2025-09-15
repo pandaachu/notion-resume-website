@@ -133,6 +133,7 @@ async function queryAndExtract<T>(type: keyof typeof FIELD_MAPPINGS): Promise<T[
       database_id: DATABASE_ID,
       filter: { property: 'Type', select: { equals: type } },
     });
+    console.log('🚀 ~ queryAndExtract ~ response:', response);
     return response.results.map((page: any) => extractProperties<T>(page.properties, page.id, FIELD_MAPPINGS[type]));
   } catch (error) {
     console.error(`❌ 獲取${type}失敗：`, error);
@@ -170,7 +171,6 @@ export const debugDatabase = async () => {
 // 各型別 API
 export const getPersonalInfo = async (): Promise<PersonalInfo> => {
   const list = await queryAndExtract<PersonalInfo>('Personal Info');
-  console.log('🚀 ~ getPersonalInfo ~ list:', list);
   return list[0] || extractProperties<PersonalInfo>({}, 'default', FIELD_MAPPINGS['Personal Info'], true);
 };
 export const getExperiences = async (): Promise<Experience[]> => queryAndExtract<Experience>('Experience');

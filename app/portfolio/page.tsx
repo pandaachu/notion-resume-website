@@ -1,21 +1,30 @@
 import { getResumeData } from '@/lib/notionPortfolio';
 import Header from '@/components/Header';
+import AboutSection from '@/components/AboutSection';
 import PageContentSection from '@/components/PageContentSection';
 import ExperienceSection from '@/components/ExperienceSection';
 import ProjectsSection from '@/components/ProjectsSection';
+import ProjectsSection2 from '@/components/ProjectsSection2';
 import SkillsSection from '@/components/SkillsSection';
 import EducationSection from '@/components/EducationSection';
+import PageParagraphSection from '@/components/PageParagraphSection';
 
 export const revalidate = 3600; // 每小時重新驗證
 
 export default async function HomePage() {
   try {
     const resumeData = await getResumeData();
-    const { personalInfo, experiences, projects, skills, education, pageContent } = resumeData;
-
+    const { personalInfo, experiences, projects, skills, education, pageContent, specialSections } = resumeData;
     return (
       <main className="min-h-screen">
         <Header personalInfo={personalInfo} />
+        <AboutSection personalInfo={personalInfo} pageContent={pageContent} />
+        {/* 🆕 關於我內容區塊 */}
+        {pageContent && <PageParagraphSection pageContent={specialSections[0]} />}
+        {pageContent && <PageParagraphSection pageContent={specialSections[1]} />}
+
+        {/* 專案作品 */}
+        {projects.length > 0 && <ProjectsSection2 projects={projects} />}
 
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* 工作經驗 */}
@@ -29,9 +38,6 @@ export default async function HomePage() {
 
           {/* 技能 */}
           {skills.length > 0 && <SkillsSection skills={skills} />}
-
-          {/* 🆕 頁面內容區塊 */}
-          {pageContent && <PageContentSection pageContent={pageContent} />}
 
           {/* 如果沒有任何資料的提示 */}
           {experiences.length === 0 && education.length === 0 && projects.length === 0 && skills.length === 0 && (

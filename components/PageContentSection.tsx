@@ -84,7 +84,7 @@ const SpecialToggleBlock = ({ block, specialType }: { block: NotionBlock; specia
   switch (specialType) {
     case 'user_manual':
       return (
-        <div className="my-8 rounded-xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50 p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+        <div className="my-8 rounded-xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50 p-8 text-white shadow-lg transition-all duration-300 hover:shadow-xl">
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center">
               <div className="mr-4 rounded-full bg-purple-100 p-3">
@@ -315,16 +315,6 @@ const SpecialToggleBlock = ({ block, specialType }: { block: NotionBlock; specia
 
 // 🔧 BlockRenderer 組件
 const BlockRenderer = ({ block }: { block: NotionBlock }) => {
-  // 🐛 開發環境調試輸出
-  // if (process.env.NODE_ENV === 'development') {
-  //   console.log('🔍 Block 處理:', {
-  //     type: block.type,
-  //     content: block.content,
-  //     hasChildren: !!(block.children?.length),
-  //     childrenCount: block.children?.length || 0
-  //   });
-  // }
-
   // 🎯 檢查是否為特殊 Toggle
   if (block.type === 'toggle') {
     const specialType = getSpecialToggleType(block.content);
@@ -356,17 +346,17 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex w-full items-center justify-between text-left"
         >
-          <span className="font-medium text-gray-900">{block.content}</span>
+          <span className="font-medium">{block.content}</span>
           <span className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>▼</span>
         </button>
 
         {isExpanded && (
           <div className="animate-fadeIn mt-4 border-l-2 border-gray-300 pl-4">
-            <div className="whitespace-pre-line text-gray-700">{toggleContent}</div>
+            <div className="whitespace-pre-line">{toggleContent}</div>
 
             {/* 🐛 一般 Toggle 調試信息 */}
             {process.env.NODE_ENV === 'development' && (
-              <div className="mt-2 rounded bg-gray-100 p-2 text-xs text-gray-600">
+              <div className="mt-2 rounded bg-gray-100 p-2 text-xs">
                 <strong>一般 Toggle 調試:</strong>
                 <br />
                 標題: {block.content}
@@ -389,16 +379,16 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
   switch (block.type) {
     case 'paragraph':
       if (!block.content.trim()) return <div className="h-4" />;
-      return <p className="mb-4 leading-relaxed text-gray-700">{block.content}</p>;
+      return <p className="mb-4 leading-relaxed">{block.content}</p>;
 
     case 'heading_1':
-      return <h1 className="mt-8 mb-6 text-3xl font-bold text-gray-900">{block.content}</h1>;
+      return <h1 className="mt-8 mb-6 text-3xl font-bold">{block.content}</h1>;
 
     case 'heading_2':
-      return <h2 className="mt-6 mb-4 text-2xl font-bold text-gray-900">{block.content}</h2>;
+      return <h2 className="mt-6 mb-4 text-2xl font-bold">{block.content}</h2>;
 
     case 'heading_3':
-      return <h3 className="mt-4 mb-3 text-xl font-semibold text-gray-900">{block.content}</h3>;
+      return <h3 className="mt-4 mb-3 text-xl font-semibold">{block.content}</h3>;
 
     case 'image':
       return (
@@ -408,13 +398,13 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
             alt={block.image?.caption || ''}
             className="h-auto max-w-full rounded-lg shadow-md transition-shadow hover:shadow-lg"
           />
-          {block.image?.caption && <p className="mt-2 text-center text-sm text-gray-500">{block.image.caption}</p>}
+          {block.image?.caption && <p className="mt-2 text-center text-sm">{block.image.caption}</p>}
         </div>
       );
 
     case 'quote':
       return (
-        <blockquote className="my-6 border-l-4 border-blue-500 bg-blue-50 py-2 pl-6 text-gray-700 italic transition-colors hover:bg-blue-100">
+        <blockquote className="my-6 border-l-4 border-blue-500 bg-blue-50 py-2 pl-6 italic transition-colors hover:bg-blue-100">
           {block.content}
         </blockquote>
       );
@@ -424,14 +414,14 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
         <div className="my-6 rounded-lg border border-gray-200 bg-gray-50 p-4 transition-colors hover:bg-gray-100">
           <div className="flex items-start space-x-3">
             {block.callout?.icon && <span className="text-2xl">{block.callout.icon}</span>}
-            <p className="flex-1 text-gray-700">{block.content}</p>
+            <p className="flex-1">{block.content}</p>
           </div>
         </div>
       );
 
     case 'bulleted_list_item':
       return (
-        <li className="mb-2 ml-6 list-disc text-gray-700">
+        <li className="mb-2 ml-6 list-disc">
           {block.content}
           {block.children && (
             <ul className="mt-2">
@@ -445,7 +435,7 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
 
     case 'numbered_list_item':
       return (
-        <li className="mb-2 ml-6 list-decimal text-gray-700">
+        <li className="mb-2 ml-6 list-decimal">
           {block.content}
           {block.children && (
             <ol className="mt-2">
@@ -460,52 +450,8 @@ const BlockRenderer = ({ block }: { block: NotionBlock }) => {
     case 'divider':
       return <hr className="my-8 border-gray-300" />;
 
-    // case 'child_database':
-    //   return (
-    //     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-6 hover:bg-blue-100 transition-colors">
-    //       <div className="flex items-center space-x-3">
-    //         <span className="text-2xl">🗃️</span>
-    //         <div>
-    //           <h4 className="font-semibold text-blue-900">
-    //             {block.child_database?.title || '資料庫'}
-    //           </h4>
-    //           <p className="text-sm text-blue-600">
-    //             此資料庫的內容已在下方相應區塊中顯示
-    //           </p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-
-    // case 'child_page':
-    //   return (
-    //     <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 my-6 hover:bg-gray-100 transition-colors">
-    //       <div className="flex items-center space-x-3">
-    //         <span className="text-2xl">📄</span>
-    //         <div>
-    //           <h4 className="font-semibold text-gray-900">
-    //             {block.child_page?.title || '子頁面'}
-    //           </h4>
-    //           <p className="text-sm text-gray-600">
-    //             子頁面連結
-    //           </p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-
     default:
-      return (
-        // <div className="bg-yellow-50 border border-yellow-200 rounded p-3 my-2">
-        //   <p className="text-sm text-yellow-700">
-        //     未支援的內容類型: {block.type}
-        //   </p>
-        //   {block.content && (
-        //     <p className="text-gray-600 mt-1">{block.content}</p>
-        //   )}
-        // </div>
-        ''
-      );
+      return '';
   }
 };
 
@@ -527,9 +473,7 @@ export default function PageContentSection({ pageContent }: PageContentSectionPr
 
         {process.env.NODE_ENV === 'development' && (
           <div className="mt-8 border-t border-gray-200 pt-6">
-            <p className="text-xs text-gray-400">
-              頁面最後編輯: {new Date(pageContent.last_edited_time).toLocaleString('zh-TW')}
-            </p>
+            <p className="text-xs">頁面最後編輯: {new Date(pageContent.last_edited_time).toLocaleString('zh-TW')}</p>
           </div>
         )}
       </div>

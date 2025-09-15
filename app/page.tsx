@@ -41,8 +41,8 @@ export default async function HomePage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold text-gray-900">載入履歷資料時發生錯誤</h1>
-          <p className="text-gray-600">請檢查 Notion 設定或稍後再試</p>
+          <h1 className="mb-4 text-2xl font-bold">載入履歷資料時發生錯誤</h1>
+          <p>請檢查 Notion 設定或稍後再試</p>
         </div>
       </main>
     );

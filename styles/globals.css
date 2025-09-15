@@ -69,7 +69,6 @@
 /* 🎨 字體最佳化設定 */
 @layer base {
   html {
-    /* color: #d9d9d9; */
     font-feature-settings:
       'rlig' 1,
       /* 連字 */ 'calt' 1,
@@ -78,6 +77,7 @@
   }
 
   body {
+    color: #d9d9d9;
     font-family: var(--font-muli), var(--font-noto-sans-tc), system-ui, sans-serif;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
@@ -143,4 +143,15 @@
   height: 100%;
   background: url(../public/images/hero.png) no-repeat;
   background-size: cover;
+}
+
+.container {
+  @apply mx-auto w-full max-w-7xl;
+}
+.section-container {
+  @apply mx-auto w-full max-w-[846px];
+}
+
+.section-title {
+  @apply font-marcellus pb-3 text-[25px] font-medium tracking-wide;
 }

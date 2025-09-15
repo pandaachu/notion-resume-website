@@ -1,7 +1,5 @@
 'use client';
 
-import AOS from 'aos';
-
 import { useState, useEffect } from 'react';
 import { Experience } from '../types/notion';
 import { NotionBlock, Heading1Block } from '../types/notion';
@@ -21,9 +19,6 @@ const ExperienceDetailH1 = ({ block }: any) => {
 
 // 🎨 Experience 詳細內容渲染器
 const ExperienceDetailRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
   const BlockRenderer = ({ block }: { block: NotionBlock }) => {
     switch (block.type) {
       case 'paragraph':
@@ -34,14 +29,14 @@ const ExperienceDetailRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
         return <ExperienceDetailH1 block={block}></ExperienceDetailH1>;
 
       case 'heading_2':
-        return <h5 className="mt-3 mb-2 text-xl font-semibold text-[#D9D9D9]">{block.content}</h5>;
+        return <h5 className="mt-3 mb-2 text-xl font-semibold">{block.content}</h5>;
 
       case 'heading_3':
-        return <h6 className="mt-2 mb-3 text-lg font-medium text-[#D9D9D9]">{block.content}</h6>;
+        return <h6 className="mt-2 mb-3 text-lg font-medium">{block.content}</h6>;
 
       case 'bulleted_list_item':
         return (
-          <li className="mb-1 ml-4 list-none text-[#D9D9D9]">
+          <li className="mb-1 ml-4 list-none">
             ❏ {block.content}
             {block.children && (
               <ul className="mt-1">
@@ -69,7 +64,7 @@ const ExperienceDetailRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
 
       case 'quote':
         return (
-          <blockquote className="my-3 border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 text-gray-700 italic">
+          <blockquote className="my-3 border-l-4 border-blue-500 bg-blue-50 py-2 pl-4 italic">
             {block.content}
           </blockquote>
         );
@@ -92,7 +87,7 @@ const ExperienceDetailRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
               alt={block.image?.caption || ''}
               className="h-auto max-w-full rounded-lg shadow-sm"
             />
-            {block.image?.caption && <p className="mt-1 text-center text-xs text-gray-500">{block.image.caption}</p>}
+            {block.image?.caption && <p className="mt-1 text-center text-xs">{block.image.caption}</p>}
           </div>
         );
 
@@ -102,7 +97,7 @@ const ExperienceDetailRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
       default:
         return (
           <div className="my-2 rounded border border-gray-200 bg-gray-50 p-2">
-            <p className="text-xs text-gray-600">
+            <p className="text-xs">
               [{block.type}] {block.content}
             </p>
           </div>
@@ -132,27 +127,27 @@ const ExperienceCard = ({ experience }: { experience: Experience }) => {
   };
 
   return (
-    <div className="relative" data-aos="fade-top">
+    <div className="relative container">
       <div className="bg-alto-500 absolute -left-1.5 h-3 w-3 rounded-full" />
       <div className="border-alto-500 border-l-1 py-10 pl-6">
         <div className="mb-3 flex flex-col md:flex-row md:items-start md:justify-between">
           <div>
             <h4 className="text-alto-900 text-xl font-semibold">{experience.position}</h4>
-            <p className="text-lg text-gray-600">{experience.company}</p>
+            <p className="text-lg">{experience.company}</p>
           </div>
-          <span className="mt-1 text-sm text-gray-500 md:mt-0">
+          <span className="mt-1 text-sm md:mt-0">
             {formatDate(experience.startDate)} - {experience.current ? '現在' : formatDate(experience.endDate ?? '')}
           </span>
         </div>
 
         {/* 基本描述 */}
-        {experience.description && <p className="mb-3 text-gray-700">{experience.description}</p>}
+        {experience.description && <p className="mb-3">{experience.description}</p>}
 
         {/* 技術標籤 */}
         {experience.technologies.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
             {experience.technologies.map((tech, index) => (
-              <span key={index} className="bg-alto-100 rounded-full px-3 py-1 text-sm text-gray-800">
+              <span key={index} className="bg-alto-100 rounded-full px-3 py-1 text-sm">
                 {tech}
               </span>
             ))}
@@ -164,7 +159,7 @@ const ExperienceCard = ({ experience }: { experience: Experience }) => {
           <div className="mt-4">
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="border-alto-300 text-alto-300 hover:bg-alto-200 hover:text-gary-800 flex cursor-pointer items-center space-x-2 rounded-full border px-4 py-1 transition-all duration-300 ease-in-out hover:text-gray-800"
+              className="border-alto-300 text-alto-300 hover:bg-alto-200 hover:text-gary-800 flex cursor-pointer items-center space-x-2 rounded-full border px-4 py-1 transition-all duration-300 ease-in-out"
             >
               <span className="text-sm font-medium">{showDetails ? '收起詳細內容' : '查看詳細內容'}</span>
               <span
@@ -193,7 +188,7 @@ export default function ExperienceSection({ experiences }: ExperienceSectionProp
 
   return (
     <section className="mb-12">
-      <h3 className="mb-6 text-2xl font-bold text-gray-900">工作經驗</h3>
+      <h3 className="mb-6 text-2xl font-bold">工作經驗</h3>
       <div className="">
         {experiences.map((experience) => (
           <ExperienceCard key={experience.id} experience={experience} />

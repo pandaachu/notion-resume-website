@@ -55,7 +55,7 @@ const CassetteLoaderWithHistory = () => {
           <div className="relative h-48 w-80 overflow-hidden rounded-lg border-2 border-gray-700 bg-gray-800 shadow-2xl">
             {/* 錄音帶標籤 */}
             <div className="absolute top-4 right-4 left-4 flex h-16 items-center justify-center rounded bg-gray-700">
-              <div className="font-mono text-sm text-gray-300">PORTFOLIO</div>
+              <div className="font-mono text-sm">PORTFOLIO</div>
             </div>
 
             {/* 左側轉盤 */}
@@ -110,7 +110,7 @@ const CassetteLoaderWithHistory = () => {
             {/* 錄音帶底部細節 */}
             <div className="absolute right-4 bottom-4 left-4 flex h-8 items-center justify-between rounded bg-gray-700 px-4">
               <div className="h-2 w-2 animate-pulse rounded-full bg-red-500"></div>
-              <div className="font-mono text-xs text-gray-400">SIDE A</div>
+              <div className="font-mono text-xs">SIDE A</div>
               <div className="h-2 w-2 rounded-full bg-green-500"></div>
             </div>
           </div>
@@ -121,13 +121,13 @@ const CassetteLoaderWithHistory = () => {
 
         {/* Loading 文字和進度條 */}
         <div className="space-y-4 text-center">
-          <div className="text-xl font-light tracking-wider text-gray-300">Loading Portfolio...</div>
+          <div className="text-xl font-light tracking-wider">Loading Portfolio...</div>
 
           <div className="h-1 w-80 overflow-hidden rounded-full bg-gray-700">
             <div className="animate-loading-bar h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
           </div>
 
-          <div className="font-mono text-sm text-gray-500">Please wait while we prepare your experience</div>
+          <div className="font-mono text-sm">Please wait while we prepare your experience</div>
         </div>
       </div>
     </div>

@@ -70,7 +70,7 @@ const FontDebugger = () => {
           <div id="fira-test-element" className="font-fira rounded bg-gray-100 p-2">
             測試元素: const test = () =&gt; true;
           </div>
-          <p className="text-sm text-gray-600">右鍵點擊上方元素 → 檢查 → Computed → font-family 查看實際使用的字體</p>
+          <p className="text-sm">右鍵點擊上方元素 → 檢查 → Computed → font-family 查看實際使用的字體</p>
         </div>
       </div>
 

@@ -1,5 +1,14 @@
 import { Client } from '@notionhq/client';
-import { ResumeData, PersonalInfo, Experience, Education, Project, Skill, NotionBlock, PageContent } from '../types/notion';
+import {
+  ResumeData,
+  PersonalInfo,
+  Experience,
+  Education,
+  Project,
+  Skill,
+  NotionBlock,
+  PageContent,
+} from '../types/notion';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -16,6 +25,19 @@ const DATABASE_IDS = {
 
 // 🆕 頁面 ID
 const RESUME_PAGE_ID = process.env.NOTION_RESUME_PAGE_ID;
+const NOTION_USER_MANUAL = process.env.NOTION_USER_MANUAL;
+const NOTION_EXPECTATION = process.env.NOTION_EXPECTATION;
+
+// 區塊結構型別
+export interface SpecialSection {
+  title: string;
+  type: string;
+  content: string[];
+  items: {
+    subtitle: string;
+    content: string[];
+  }[];
+}
 
 // 安全的屬性解析器
 const getPropertyValue = (property: any, type: string): any => {
@@ -54,19 +76,20 @@ const getPropertyValue = (property: any, type: string): any => {
 
 const getDefaultValue = (type: string): any => {
   switch (type) {
-    case 'checkbox': return false;
-    case 'multi_select': return [];
-    default: return '';
+    case 'checkbox':
+      return false;
+    case 'multi_select':
+      return [];
+    default:
+      return '';
   }
 };
 
 // 🆕 Rich Text 解析器
 const parseRichText = (rich_text: any[]): string => {
   if (!rich_text || rich_text.length === 0) return '';
-  
-  return rich_text
-    .map((text: any) => text.plain_text || text.text?.content || '')
-    .join('');
+
+  return rich_text.map((text: any) => text.plain_text || text.text?.content || '').join('');
 };
 
 // 🆕 Block 解析器
@@ -188,12 +211,12 @@ const getAllBlocks = async (blockId: string): Promise<NotionBlock[]> => {
 
     for (const block of response.results) {
       const parsedBlock = parseBlock(block);
-      
+
       // 檢查是否有子 blocks
       if ((block as any).has_children) {
         try {
           parsedBlock.children = await getAllBlocks(block.id);
-          
+
           // 如果是 toggle，將子內容填入 toggle 屬性
           if (parsedBlock.type === 'toggle' && parsedBlock.toggle) {
             parsedBlock.toggle.children = parsedBlock.children;
@@ -230,9 +253,10 @@ export const getPageContent = async (): Promise<PageContent | null> => {
     });
 
     // 獲取頁面標題
-    const pageTitle = (page as any).properties?.title?.title?.[0]?.text?.content || 
-                     (page as any).properties?.Name?.title?.[0]?.text?.content || 
-                     '個人履歷';
+    const pageTitle =
+      (page as any).properties?.title?.title?.[0]?.text?.content ||
+      (page as any).properties?.Name?.title?.[0]?.text?.content ||
+      '個人履歷';
 
     // 獲取所有 blocks
     const blocks = await getAllBlocks(RESUME_PAGE_ID);
@@ -246,7 +270,6 @@ export const getPageContent = async (): Promise<PageContent | null> => {
 
     console.log(`✅ 頁面內容獲取成功，包含 ${blocks.length} 個 blocks`);
     return pageContent;
-
   } catch (error) {
     console.error('❌ 獲取頁面內容失敗:', error);
     return null;
@@ -258,7 +281,7 @@ export const getPersonalInfo = async (): Promise<PersonalInfo> => {
   try {
     const response = await notion.databases.query({
       database_id: DATABASE_IDS.PERSONAL_INFO,
-      page_size: 1
+      page_size: 1,
     });
 
     if (response.results.length === 0) {
@@ -299,14 +322,40 @@ export const getPersonalInfo = async (): Promise<PersonalInfo> => {
   }
 };
 
+export const getTableContent = async (databaseId: string): Promise<any> => {
+  try {
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      page_size: 1,
+    });
+
+    if (response.results.length === 0) {
+      throw new Error('個人資訊資料庫中沒有資料');
+    }
+
+    const page = response.results[0] as any;
+    const properties = page.properties;
+
+    return {
+      id: page.id,
+      name: getPropertyValue(properties.Name, 'title'),
+      URL: getPropertyValue(properties.URL, 'url'),
+      Image: getPropertyValue(properties.Image, 'files'),
+    };
+  } catch (error) {
+    console.error('❌ 獲取個人資訊失敗：', error);
+    return {};
+  }
+};
+
 // 🆕 獲取 Experience 詳細頁面內容
 const getExperiencePageContent = async (pageId: string): Promise<NotionBlock[]> => {
   try {
     console.log(`🔍 正在獲取 Experience 頁面內容: ${pageId}`);
-    
+
     const blocks = await getAllBlocks(pageId);
     console.log(`✅ Experience 頁面內容獲取成功，包含 ${blocks.length} 個 blocks`);
-    
+
     return blocks;
   } catch (error) {
     console.error('❌ 獲取 Experience 頁面內容失敗:', error);
@@ -322,9 +371,9 @@ export const getExperiences = async (): Promise<Experience[]> => {
       sorts: [
         {
           property: 'StartDate',
-          direction: 'descending'
-        }
-      ]
+          direction: 'descending',
+        },
+      ],
     });
 
     const experiences: Experience[] = [];
@@ -332,7 +381,7 @@ export const getExperiences = async (): Promise<Experience[]> => {
     for (const page of response.results) {
       const pageData = page as any;
       const properties = pageData.properties;
-      
+
       // 基本資料
       const baseExperience: Experience = {
         id: pageData.id,
@@ -350,18 +399,18 @@ export const getExperiences = async (): Promise<Experience[]> => {
       try {
         const hasChildren = await notion.blocks.children.list({
           block_id: pageData.id,
-          page_size: 1
+          page_size: 1,
         });
 
         if (hasChildren.results.length > 0) {
           console.log(`🔍 發現 Experience 有詳細內容: ${baseExperience.position} - ${baseExperience.company}`);
-          
+
           // 獲取詳細頁面內容
           const detailContent = await getExperiencePageContent(pageData.id);
-          
+
           // 獲取頁面標題
           const pageTitle = `${baseExperience.position} - ${baseExperience.company}`;
-          
+
           baseExperience.hasDetailPage = true;
           baseExperience.detailPageId = pageData.id;
           baseExperience.detailPageContent = detailContent;
@@ -389,9 +438,9 @@ export const getEducation = async (): Promise<Education[]> => {
       sorts: [
         {
           property: 'StartDate',
-          direction: 'descending'
-        }
-      ]
+          direction: 'descending',
+        },
+      ],
     });
 
     return response.results.map((page: any) => {
@@ -420,15 +469,18 @@ export const getProjects = async (): Promise<Project[]> => {
       sorts: [
         {
           property: 'StartDate',
-          direction: 'descending'
-        }
-      ]
+          direction: 'descending',
+        },
+      ],
     });
+    const projects: Project[] = [];
+    for (const page of response.results) {
+      const pageData = page as any;
+      const properties = pageData.properties;
 
-    return response.results.map((page: any) => {
-      const properties = page.properties;
-      return {
-        id: page.id,
+      // 基本資料
+      const baseProject: Project = {
+        id: pageData.id,
         name: getPropertyValue(properties.Name, 'title'),
         description: getPropertyValue(properties.Description, 'rich_text'),
         technologies: getPropertyValue(properties.Technologies, 'multi_select'),
@@ -436,7 +488,37 @@ export const getProjects = async (): Promise<Project[]> => {
         liveUrl: getPropertyValue(properties.LiveURL, 'url'),
         image: getPropertyValue(properties.Image, 'files'),
       };
-    });
+
+      // 🆕 檢查是否有詳細頁面內容
+      // 方法1: 檢查 page 是否有子 blocks (最常見)
+      try {
+        const hasChildren = await notion.blocks.children.list({
+          block_id: pageData.id,
+          page_size: 1,
+        });
+
+        if (hasChildren.results.length > 0) {
+          console.log(`🔍 發現 Experience 有詳細內容: ${baseProject.name}`);
+
+          // 獲取詳細頁面內容
+          const detailContent = await getExperiencePageContent(pageData.id);
+
+          // 獲取頁面標題
+          const pageTitle = `${baseProject.name}`;
+
+          baseProject.hasDetailPage = true;
+          baseProject.detailPageId = pageData.id;
+          baseProject.detailPageContent = detailContent;
+          baseProject.detailPageTitle = pageTitle;
+        }
+      } catch (error) {
+        console.warn(`⚠️ 檢查 Experience 詳細內容時發生錯誤: ${pageData.id}`, error);
+      }
+
+      projects.push(baseProject);
+    }
+
+    return projects;
   } catch (error) {
     console.error('❌ 獲取專案作品失敗：', error);
     return [];
@@ -464,6 +546,51 @@ export const getSkills = async (): Promise<Skill[]> => {
     return [];
   }
 };
+// 解析 heading_1 區塊為 SpecialSection
+export function parseSpecialSection(block: NotionBlock): SpecialSection | null {
+  if (block.type !== 'heading_1') return null;
+
+  const title = block.heading?.content || block.content;
+  let type = '';
+  if (title.includes('使用說明')) type = 'user_manual';
+  else if (title.includes('期望') || title.toLowerCase().includes('expectation')) type = 'expectation';
+  else type = 'other';
+
+  const section: SpecialSection = {
+    title,
+    type,
+    content: [],
+    items: [],
+  };
+
+  let currentItem: { subtitle: string; content: string[] } | null = null;
+  for (const child of block.children ?? []) {
+    if (child.type === 'paragraph') {
+      if (!currentItem) {
+        section.content.push(child.content);
+      } else {
+        currentItem.content.push(child.content);
+      }
+    } else if (child.type === 'heading_3') {
+      if (currentItem) section.items.push(currentItem);
+      currentItem = {
+        subtitle: child.heading?.content || child.content,
+        content: [],
+      };
+    }
+  }
+  if (currentItem) section.items.push(currentItem);
+
+  return section;
+}
+
+// 取得所有 SpecialSection
+export function getAllSpecialSections(blocks: NotionBlock[]): SpecialSection[] {
+  return blocks
+    .filter((block) => block.type === 'heading_1')
+    .map((block) => parseSpecialSection(block))
+    .filter((section): section is SpecialSection => !!section);
+}
 
 // 獲取所有履歷資料
 export const getResumeData = async (): Promise<ResumeData> => {
@@ -479,21 +606,33 @@ export const getResumeData = async (): Promise<ResumeData> => {
       getPageContent(),
     ]);
 
+    // 解析所有特殊區塊
+    let specialSections: SpecialSection[] = [];
+    if (pageContent.status === 'fulfilled' && pageContent.value?.blocks) {
+      specialSections = getAllSpecialSections(pageContent.value.blocks);
+      // 你可以將 specialSections 存到 ResumeData 或單獨導出
+      // 例如：result.specialSections = specialSections;
+    }
+
     const result: ResumeData = {
-      personalInfo: personalInfo.status === 'fulfilled' ? personalInfo.value : {
-        id: 'error',
-        name: '載入錯誤',
-        title: '無法載入個人資訊',
-        email: '',
-        phone: '',
-        location: '',
-        summary: '請檢查 Notion 設定',
-      },
+      personalInfo:
+        personalInfo.status === 'fulfilled'
+          ? personalInfo.value
+          : {
+              id: 'error',
+              name: '載入錯誤',
+              title: '無法載入個人資訊',
+              email: '',
+              phone: '',
+              location: '',
+              summary: '請檢查 Notion 設定',
+            },
       experiences: experiences.status === 'fulfilled' ? experiences.value : [],
       education: education.status === 'fulfilled' ? education.value : [],
       projects: projects.status === 'fulfilled' ? projects.value : [],
       skills: skills.status === 'fulfilled' ? skills.value : [],
-      pageContent: pageContent.status === 'fulfilled' ? pageContent.value : null,
+      pageContent: pageContent.status === 'fulfilled' && pageContent.value ? pageContent.value : undefined,
+      specialSections,
     };
 
     console.log('✅ 履歷資料獲取完成 (包含頁面內容)');

@@ -21,6 +21,10 @@ export interface Experience {
   current: boolean;
   description: string;
   technologies: string[];
+  hasDetailPage?: boolean; // 是否有詳細頁面
+  detailPageId?: string; // 詳細頁面的 ID
+  detailPageContent?: NotionBlock[]; // 詳細頁面的內容
+  detailPageTitle?: string; // 詳細頁面的標題
 }
 
 export interface Education {
@@ -41,6 +45,10 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   image?: string;
+  hasDetailPage?: boolean; // 是否有詳細頁面
+  detailPageId?: string; // 詳細頁面的 ID
+  detailPageContent?: NotionBlock[]; // 詳細頁面的內容
+  detailPageTitle?: string; // 詳細頁面的標題
 }
 
 export interface Skill {
@@ -50,10 +58,74 @@ export interface Skill {
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
 }
 
+export interface PageContent {
+  id: string;
+  title: string;
+  blocks: NotionBlock[];
+  last_edited_time: string;
+}
+
+export interface NotionBlock {
+  id: string;
+  type: string;
+  content: string;
+  rich_text?: any[];
+  children?: NotionBlock[];
+  // 特殊屬性
+  heading?: {
+    level: 1 | 2 | 3;
+    content: string;
+  };
+  paragraph?: {
+    content: string;
+    rich_text: any[];
+  };
+  image?: {
+    url: string;
+    caption?: string;
+  };
+  quote?: {
+    content: string;
+  };
+  callout?: {
+    icon?: string;
+    content: string;
+  };
+  bulleted_list_item?: {
+    content: string;
+  };
+  numbered_list_item?: {
+    content: string;
+  };
+  child_database?: {
+    title: string;
+    database_id: string;
+  };
+  child_page?: {
+    title: string;
+    page_id: string;
+  };
+  toggle?: {
+    title: string;
+    children: NotionBlock[];
+  };
+}
 export interface ResumeData {
   personalInfo: PersonalInfo;
   experiences: Experience[];
   education: Education[];
   projects: Project[];
   skills: Skill[];
+  pageContent?: PageContent;
+  specialSections?: any;
+}
+
+export interface Heading1Block {
+  id: string;
+  type: 'heading_1';
+  content: string;
+  heading: {
+    level: 1;
+    content: string;
+  };
 }

@@ -169,6 +169,7 @@ npm run dev
 開啟 [http://localhost:3000](http://localhost:3000) 查看結果。
 
 ## 📝 Notion 測試資料添加指南
+開啟 [http://localhost:3000/debug](http://localhost:3000/debug) 查看結果。
 
 ### 個人資訊資料
 ```

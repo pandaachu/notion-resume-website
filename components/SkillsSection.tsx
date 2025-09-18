@@ -5,13 +5,16 @@ interface SkillsSectionProps {
 }
 
 export default function SkillsSection({ skills }: SkillsSectionProps) {
-  const groupedSkills = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
-    }
-    acc[skill.category].push(skill);
-    return acc;
-  }, {} as Record<string, Skill[]>);
+  const groupedSkills = skills.reduce(
+    (acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = [];
+      }
+      acc[skill.category].push(skill);
+      return acc;
+    },
+    {} as Record<string, Skill[]>,
+  );
 
   const getLevelColor = (level: string) => {
     switch (level) {
@@ -30,31 +33,30 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
 
   return (
     <section className="mb-12">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">技能</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h3 className="mb-6 text-2xl font-bold">技能</h3>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-          <div key={category} className="bg-white rounded-lg shadow-md p-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">
-              {category}
-            </h4>
+          <div key={category} className="rounded-lg bg-white p-6 shadow-md">
+            <h4 className="mb-4 text-lg font-semibold">{category}</h4>
             <div className="space-y-3">
               {categorySkills.map((skill) => (
                 <div key={skill.id}>
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm font-medium text-gray-700">
-                      {skill.name}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {skill.level}
-                    </span>
+                  <div className="mb-1 flex items-center justify-between">
+                    <span className="text-sm font-medium">{skill.name}</span>
+                    <span className="text-xs">{skill.level}</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="h-2 w-full rounded-full bg-gray-200">
                     <div
                       className={`h-2 rounded-full ${getLevelColor(skill.level)}`}
                       style={{
-                        width: skill.level === 'Expert' ? '100%' : 
-                               skill.level === 'Advanced' ? '80%' :
-                               skill.level === 'Intermediate' ? '60%' : '40%'
+                        width:
+                          skill.level === 'Expert'
+                            ? '100%'
+                            : skill.level === 'Advanced'
+                              ? '80%'
+                              : skill.level === 'Intermediate'
+                                ? '60%'
+                                : '40%',
                       }}
                     />
                   </div>

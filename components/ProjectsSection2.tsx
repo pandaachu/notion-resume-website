@@ -1,20 +1,20 @@
 import { Project } from '../types/notion';
 import { ArrowTopRightOnSquareIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
-
+import PageDetailRenderer from './PageDetailRenderer';
 interface ProjectsSectionProps {
   projects: Project[];
 }
 
-export default function ProjectsSection({ projects }: ProjectsSectionProps) {
+export default function ProjectsSection2({ projects }: ProjectsSectionProps) {
   return (
-    <section className="mb-12" data-aos="fade-left">
+    <section className="section-container mb-12">
       <h3 className="mb-6 text-2xl font-bold">專案作品</h3>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="">
         {projects.map((project) => (
-          <div key={project.id} className="overflow-hidden rounded-lg bg-white shadow-md">
+          <div key={project.id} className="">
+            <h3 className="mb-8 border-b border-white pb-4 text-[20px]">{project.name}</h3>
             {project.image && <img className="h-48 w-full object-cover" src={project.image} alt={project.name} />}
             <div className="p-6">
-              <h4 className="mb-2 text-xl font-semibold">{project.name}</h4>
               <p className="mb-4">{project.description}</p>
 
               <div className="mb-4 flex flex-wrap gap-2">
@@ -23,6 +23,10 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     {tech}
                   </span>
                 ))}
+              </div>
+              <div className="r mt-4 p-4">
+                <h5 className="text-md mb-3">📋 詳細工作內容</h5>
+                <PageDetailRenderer blocks={project.detailPageContent} />
               </div>
 
               <div className="flex space-x-4">

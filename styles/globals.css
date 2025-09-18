@@ -1,1 +1,157 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-loading-bar: loading-progress 5s ease-out forwards;
+
+  --color-gray: oklch(30.519% 0 none);
+  --color-gray-50: oklch(89.449% 0 none);
+  --color-gray-100: oklch(86.378% 0 none);
+  --color-gray-200: oklch(80.152% 0 none);
+  --color-gray-300: oklch(73.481% 0 none);
+  --color-gray-400: oklch(66.984% 0 none);
+  --color-gray-500: oklch(60.325% 0 none);
+  --color-gray-600: oklch(53.128% 0 none);
+  --color-gray-700: oklch(46.04% 0 none);
+  --color-gray-800: oklch(38.288% 0 none);
+  --color-gray-900: oklch(30.519% 0 none);
+  --color-gray-950: oklch(24.776% 0 none);
+  --color-alto: oklch(88.531% 0 none);
+  --color-alto-50: oklch(100% 0 none);
+  --color-alto-100: oklch(100% 0 none);
+  --color-alto-200: oklch(100% 0 none);
+  --color-alto-300: oklch(100% 0 none);
+  --color-alto-400: oklch(100% 0 none);
+  --color-alto-500: oklch(100% 0 none);
+  --color-alto-600: oklch(100% 0 none);
+  --color-alto-700: oklch(100% 0 none);
+  --color-alto-800: oklch(97.913% 0 none);
+  --color-alto-900: oklch(91.583% 0 none);
+  --color-alto-950: oklch(88.531% 0 none);
+
+  @keyframes fade-in-scale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes loading-progress {
+    0%: {
+      width: '0%';
+    }
+    100%: {
+      width: '100%';
+    }
+  }
+}
+
+@theme {
+  /* --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; */
+  --font-fira: 'Fira Code', monospace;
+  --font-baskervville: 'Baskervville', serif;
+  --font-display: 'Baskervville', 'sans-serif';
+  --font-roboto: 'Roboto', 'sans-serif';
+  --color-mint-500: oklch(0.72 0.11 178);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-jetbrains: 'JetBrains Mono', 'Consolas', 'Monaco', 'monospace';
+  --font-muli: 'muli', 'sans-serif';
+  --font-nanum-myeongjo: 'Nanum Myeongjo', serif;
+  --font-cormorant-garamond: 'Cormorant Garamond', serif;
+  --font-marcellus: 'Marcellus', serif;
+}
+
+/* 🎨 字體最佳化設定 */
+@layer base {
+  html {
+    font-feature-settings:
+      'rlig' 1,
+      /* 連字 */ 'calt' 1,
+      /* 上下文替代 */ 'ss01' 1,
+      /* 風格集 */ 'cv01' 1; /* 字符變體 */
+  }
+
+  body {
+    color: #d9d9d9;
+    font-family: var(--font-muli), var(--font-noto-sans-tc), system-ui, sans-serif;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 🎯 標題字體設定 */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-marcellus), var(--font-noto-sans-tc), serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  /* 🎯 程式碼字體設定 */
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-jetbrains-mono), Consolas, Monaco, monospace;
+    font-variant-ligatures: none;
+  }
+}
+
+/* 🎨 自訂字體工具類 */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-playfair), var(--font-noto-sans-tc), serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .font-body {
+    font-family: var(--font-inter), var(--font-noto-sans-tc), system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .font-zh {
+    font-family: var(--font-noto-sans-tc), 'PingFang SC', 'Microsoft JhengHei', sans-serif;
+  }
+
+  .font-en {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+}
+
+/* 🌏 中文字體最佳化 */
+@supports (font-variation-settings: normal) {
+  .font-zh {
+    font-variation-settings:
+      'wght' 400,
+      'slnt' 0;
+  }
+}
+
+.hero-bg {
+  height: 100%;
+  background: url(../public/images/hero.png) no-repeat;
+  background-size: cover;
+}
+
+.container {
+  @apply mx-auto w-full max-w-7xl;
+}
+.section-container {
+  @apply mx-auto w-full max-w-[846px];
+}
+
+.section-title {
+  @apply font-marcellus pb-3 text-[25px] font-medium tracking-wide;
+}

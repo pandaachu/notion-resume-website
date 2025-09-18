@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { notionService } from '@/lib/notion/service';
+import * as notionService from '@/lib/notion/service';
 
 /**
  * 主要 API 路由 - 獲取所有履歷資料

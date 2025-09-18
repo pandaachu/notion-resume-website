@@ -1,4 +1,3 @@
-// app/portfolio/page.tsx
 'use client';
 
 import { useResumeData } from '@/hooks/useResumeData';

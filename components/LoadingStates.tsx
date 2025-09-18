@@ -1,4 +1,3 @@
-// components/LoadingStates.tsx
 import React from 'react';
 
 /**

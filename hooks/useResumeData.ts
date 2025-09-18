@@ -1,4 +1,3 @@
-// hooks/useResumeData.ts
 import { useState, useEffect, useCallback } from 'react';
 import { ResumeData, PersonalInfo, Experience, Education, Project, Skill } from '@/types/notion';
 import { browserCache, CACHE_KEYS } from '@/lib/cache/notionCache';

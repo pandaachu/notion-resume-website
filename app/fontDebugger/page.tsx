@@ -59,7 +59,7 @@ const FontDebugger = () => {
           <p>開啟瀏覽器開發者工具 → Network → 篩選 Font</p>
           <p>刷新頁面，查看是否有 Fira Code 相關的字體檔案載入</p>
           <p>或者在 Console 中執行：</p>
-          <code className="mt-2 block rounded bg-gray-100 p-2">document.fonts.check('12px "Fira Code"')</code>
+          <code className="mt-2 block rounded bg-gray-100 p-2">document.fonts.check(12px Fira Code)</code>
         </div>
       </div>
 
@@ -106,7 +106,7 @@ const FontDebugger = () => {
           <div className="rounded bg-white p-3">
             <h4 className="mb-2 font-medium">方案 1: 直接使用內聯樣式</h4>
             <code className="text-xs">
-              style=&#123;&#123; fontFamily: 'var(--font-fira-code), monospace' &#125;&#125;
+              style=&#123;&#123; fontFamily: var(--font-fira-code), monospace &#125;&#125;
             </code>
           </div>
 

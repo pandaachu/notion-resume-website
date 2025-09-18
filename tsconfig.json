@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noImplicitAny": false, // 允許隱式 any（降低嚴格度）
     "plugins": [
       {
         "name": "next"

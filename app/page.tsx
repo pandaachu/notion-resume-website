@@ -4,19 +4,19 @@ import ExperienceSection from '@/components/ExperienceSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import SkillsSection from '@/components/SkillsSection';
 import EducationSection from '@/components/EducationSection';
-import { useEffect } from 'react';
-import AOS from 'aos';
+// import { useEffect } from 'react';
+// import AOS from 'aos';
 import CassetteLoaderWithHistory from '@/components/CassetteLoaderWithHistory';
 
 export const revalidate = 3600; // 每小時重新驗證
 
 export default async function HomePage() {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: false,
-    });
-  }, []);
+  // useEffect(() => {
+  //   AOS.init({
+  //     duration: 800,
+  //     once: false,
+  //   });
+  // }, []);
 
   try {
     const resumeData = await getResumeData();

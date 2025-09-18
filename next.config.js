@@ -10,16 +10,16 @@ const nextConfig = {
   },
 
   // 生產環境優化
-  swcMinify: true,
+  // swcMinify: true,
 
   // 輸出優化
-  output: 'standalone',
+  // output: 'standalone',
 
   // 實驗性功能
-  experimental: {
-    // 啟用伺服器元件
-    serverComponents: true,
-  },
+  // experimental: {
+  //   // 啟用伺服器元件
+  //   serverComponents: true,
+  // },
 };
 
 module.exports = nextConfig;

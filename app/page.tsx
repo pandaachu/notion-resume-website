@@ -20,19 +20,19 @@ export default async function HomePage() {
 
   try {
     const resumeData = await getResumeData();
-    const { personalInfo, experiences, projects, skills, education } = resumeData;
+    const { personalInfo } = resumeData;
 
     return (
       <main className="min-h-screen">
         <Header personalInfo={personalInfo} />
-        <CassetteLoaderWithHistory />
+        {/* <CassetteLoaderWithHistory /> */}
 
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <ExperienceSection experiences={experiences} />
           <EducationSection education={education} />
           <ProjectsSection projects={projects} />
           <SkillsSection skills={skills} />
-        </div>
+        </div> */}
       </main>
     );
   } catch (error) {

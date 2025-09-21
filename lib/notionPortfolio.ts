@@ -643,6 +643,26 @@ export const getResumeData = async (): Promise<ResumeData> => {
   }
 };
 
+// export async function getProjectsWithPersonalInfo() {
+//   try {
+//     console.log('🎯 Fetching projects and personal info only...');
+
+//     // 並行獲取，但只要這兩個
+//     const [projects, personalInfo] = await Promise.all([getProjects(), getPersonalInfo()]);
+
+//     return {
+//       projects,
+//       personalInfo,
+//     };
+//   } catch (error) {
+//     console.error('Error fetching projects data:', error);
+//     return {
+//       projects: [],
+//       personalInfo: getDefaultPersonalInfo(),
+//     };
+//   }
+// }
+
 // 測試所有資料庫連接
 export const testAllDatabaseConnections = async () => {
   const databases = [

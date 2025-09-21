@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
 
     // 觸發頁面重新生成
     revalidatePath('/portfolio');
+    revalidatePath('/project');
 
     // 如果你的頁面路徑不同，改這裡
     // revalidatePath('/');  // 如果是首頁

@@ -214,4 +214,40 @@ const CassetteLoader = ({ children }) => {
     </>
   );
 };
-export default CassetteLoader;
+
+// 示例使用
+export default function CassetteLoader2() {
+  return (
+    <CassetteLoader>
+      {/* 這裡放置你的主要頁面內容 */}
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div className="container mx-auto px-4 py-16">
+          <header className="mb-16 text-center">
+            <h1 className="mb-4 text-5xl font-bold text-gray-800">復古音樂播放器</h1>
+            <p className="text-xl text-gray-600">重溫經典卡帶時光</p>
+          </header>
+
+          <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
+            <div className="transform rounded-xl bg-white p-8 shadow-lg transition-transform hover:scale-105">
+              <div className="mb-4 text-4xl">🎵</div>
+              <h2 className="mb-2 text-2xl font-semibold">經典收藏</h2>
+              <p className="text-gray-600">探索數千首經典歌曲</p>
+            </div>
+
+            <div className="transform rounded-xl bg-white p-8 shadow-lg transition-transform hover:scale-105">
+              <div className="mb-4 text-4xl">📼</div>
+              <h2 className="mb-2 text-2xl font-semibold">播放清單</h2>
+              <p className="text-gray-600">創建你的專屬混音帶</p>
+            </div>
+
+            <div className="transform rounded-xl bg-white p-8 shadow-lg transition-transform hover:scale-105">
+              <div className="mb-4 text-4xl">🎧</div>
+              <h2 className="mb-2 text-2xl font-semibold">高品質音訊</h2>
+              <p className="text-gray-600">享受無損音質體驗</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </CassetteLoader>
+  );
+}

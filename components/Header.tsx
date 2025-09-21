@@ -1,4 +1,5 @@
 import { PersonalInfo } from '../types/notion';
+import Link from 'next/link';
 
 interface HeaderProps {
   personalInfo: PersonalInfo;
@@ -13,10 +14,14 @@ export default function Header({ personalInfo }: HeaderProps) {
           <div>Pandaaaaa 🐼🐼🐼</div>
           <ul className="font-marcellus flex space-x-6">
             <li>
-              <a href="#">About/ 關於我</a>
+              <Link href="/portfolio" className="hover:text-gray-300">
+                About/ 關於我
+              </Link>
             </li>
             <li>
-              <a href="#">Project/ 專案</a>
+              <Link href="/project" className="hover:text-gray-300">
+                Project/ 專案
+              </Link>
             </li>
             <li>
               <a href="#">Works/ 工作經歷</a>

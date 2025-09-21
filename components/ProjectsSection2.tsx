@@ -9,12 +9,14 @@ export default function ProjectsSection2({ projects }: ProjectsSectionProps) {
   return (
     <section className="section-container mb-12">
       <h3 className="mb-6 text-2xl font-bold">專案作品</h3>
-      <div className="">
+      <div>
         {projects.map((project) => (
-          <div key={project.id} className="">
+          <div key={project.id} className="mb-10">
             <h3 className="mb-8 border-b border-white pb-4 text-[20px]">{project.name}</h3>
-            {project.image && <img className="h-48 w-full object-cover" src={project.image} alt={project.name} />}
-            <div className="p-6">
+            {project.image && (
+              <img className="h-[500px] w-full rounded-xl object-cover" src={project.image} alt={project.name} />
+            )}
+            <div className="">
               <p className="mb-4">{project.description}</p>
 
               <div className="mb-4 flex flex-wrap gap-2">
@@ -24,7 +26,7 @@ export default function ProjectsSection2({ projects }: ProjectsSectionProps) {
                   </span>
                 ))}
               </div>
-              <div className="r mt-4 p-4">
+              <div className="r mt-4">
                 <h5 className="text-md mb-3">📋 詳細工作內容</h5>
                 <PageDetailRenderer blocks={project.detailPageContent} />
               </div>

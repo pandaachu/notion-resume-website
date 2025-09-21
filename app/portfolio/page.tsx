@@ -2,7 +2,7 @@ import { getResumeData } from '@/lib/notionPortfolio';
 import Header from '@/components/Header';
 import AboutSection from '@/components/AboutSection';
 import ExperienceSection from '@/components/ExperienceSection';
-import ProjectsSection2 from '@/components/ProjectsSection2';
+// import ProjectsSection2 from '@/components/ProjectsSection2';
 import SkillsSection from '@/components/SkillsSection';
 import EducationSection from '@/components/EducationSection';
 import PageParagraphSection from '@/components/PageParagraphSection';
@@ -71,7 +71,7 @@ export default async function PortfolioPage() {
       },
       experiences: [],
       education: [],
-      projects: [],
+      // projects: [],
       skills: [],
       pageContent: undefined,
       specialSections: [],
@@ -126,7 +126,7 @@ export default async function PortfolioPage() {
         ))}
 
       {/* 專案作品 - 使用新版組件 */}
-      {projects.length > 0 && <ProjectsSection2 projects={projects} />}
+      {/* {projects.length > 0 && <ProjectsSection2 projects={projects} />} */}
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* 工作經驗 */}

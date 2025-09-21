@@ -8,6 +8,7 @@ import EducationSection from '@/components/EducationSection';
 import PageParagraphSection from '@/components/PageParagraphSection';
 import { Metadata } from 'next';
 import DevUpdateButton from '@/components/DevUpdateButton';
+// import CassetteLoader from '@/components/CassetteLoader';
 
 // 🎯 設定更新頻率（選一個）
 export const revalidate = 1800; // 30 分鐘自動更新
@@ -108,7 +109,6 @@ export default async function PortfolioPage() {
       </main>
     );
   }
-
   // 正常渲染頁面
   return (
     <main className="min-h-screen">

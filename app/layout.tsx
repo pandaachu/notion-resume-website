@@ -1,5 +1,7 @@
 import '../styles/globals.css';
 import 'aos/dist/aos.css';
+import Header from '@/components/Header';
+
 import {
   Inter,
   Noto_Sans_TC,
@@ -103,7 +105,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
       </head>
-      <body className="bg-[#2F2F2F] antialiased">{children}</body>
+      <body className="bg-[#2F2F2F] antialiased">
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

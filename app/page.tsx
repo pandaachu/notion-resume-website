@@ -119,7 +119,7 @@ export default async function HomePage() {
     <main className="min-h-screen">
       {/* 頁首 - 個人資訊 */}
 
-      <HeroSection personalInfo={personalInfo} />
+      <HeroSection />
 
       {/* 關於我 */}
       {personalInfo && <AboutSection personalInfo={personalInfo} pageContent={pageContent} />}

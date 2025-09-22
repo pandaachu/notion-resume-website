@@ -1,8 +1,8 @@
+// TODO: to be deleted
 import { getResumeData } from '@/lib/notionPortfolio';
 import Header from '@/components/Header';
 import AboutSection from '@/components/AboutSection';
 import ExperienceSection from '@/components/ExperienceSection';
-// import ProjectsSection2 from '@/components/ProjectsSection2';
 import SkillsSection from '@/components/SkillsSection';
 import EducationSection from '@/components/EducationSection';
 import PageParagraphSection from '@/components/PageParagraphSection';
@@ -113,7 +113,7 @@ export default async function PortfolioPage() {
   return (
     <main className="min-h-screen">
       {/* 頁首 - 個人資訊 */}
-      <Header personalInfo={personalInfo} />
+      {/* <Header personalInfo={personalInfo} /> */}
 
       {/* 關於我 */}
       {personalInfo && <AboutSection personalInfo={personalInfo} pageContent={pageContent} />}

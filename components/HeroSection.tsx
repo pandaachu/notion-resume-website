@@ -6,7 +6,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection() {
-  const { personalInfo } = usePersonalInfo();
+  const { personalInfo, isLoading } = usePersonalInfo();
   return (
     <>
       {/* 增加 padding-top，避免 header 遮住內容 */}
